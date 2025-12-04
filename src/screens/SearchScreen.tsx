@@ -101,35 +101,6 @@ export default function SearchScreen({ route }: Props) {
     navigation.navigate("Details", { id: video.videoId });
   };
 
-  // ⛔ DUPLIKAT useEffect – NIEPOTRZEBNY, BO MAMY JUŻ JEDEN POWYŻEJ
-  /*
-  useEffect(() => {
-    if (initialQueryFromRoute) {
-      setQuery(initialQueryFromRoute);
-      performSearch(initialQueryFromRoute);
-    }
-  }, [initialQueryFromRoute, sortBy]);
-  */
-
-  // ⛔ STARA WERSJA SORTOWANIA PO PRZYCISKACH – AKTUALNIE NIEUŻYWANA
-  /*
-  const handleSortChange = (newSort: "relevance" | "date" | "viewCount") => {
-    setSortBy(newSort as any);
-    if (query) {
-      performSearch(query);
-    }
-  };
-
-  const sortOptions: Array<{
-    label: string;
-    value: "relevance" | "date" | "viewCount";
-  }> = [
-    { label: "Trafność", value: "relevance" },
-    { label: "Najnowsze", value: "date" },
-    { label: "Popularne", value: "viewCount" },
-  ];
-  */
-
   const trimmedQuery = query.trim();
   const hasResults = videos.length > 0;
 
@@ -157,7 +128,7 @@ export default function SearchScreen({ route }: Props) {
         </View>
       </View>
 
-      {/* Header wyników + sort by (jak w makiecie) */}
+      {/* Header wyników + sort by */}
       {trimmedQuery.length > 0 && (
         <View style={styles.resultsHeader}>
           {hasResults && (
@@ -178,15 +149,6 @@ export default function SearchScreen({ route }: Props) {
               </Text>
             </Text>
           </TouchableOpacity>
-        </View>
-      )}
-
-      {/* Sortowanie przyciskami – NA RAZIE WYŁĄCZONE */}
-      {false && hasResults && (
-        <View
-          style={[styles.sortContainer, { backgroundColor: colors.surface }]}
-        >
-          {/* ...stare przyciski sortowania */}
         </View>
       )}
 
@@ -273,10 +235,10 @@ export default function SearchScreen({ route }: Props) {
             <TouchableOpacity
               style={styles.modalButton}
               onPress={() => {
-                setSortBy(pendingSort); // ustawia sortBy na wybór z modala
+                setSortBy(pendingSort);
                 setIsSortModalVisible(false);
                 if (query.trim()) {
-                  performSearch(query); // przeładowanie wyników z nowym sortowaniem
+                  performSearch(query);
                 }
               }}
             >
